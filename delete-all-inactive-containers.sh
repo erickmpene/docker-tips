@@ -1,24 +1,25 @@
 #!/bin/bash
 
-# Récupérer la liste des conteneurs inactifs
+# Retrieve the list of inactive containers
 inactive_containers=$(docker ps -q --filter "status=exited")
 
-# Vérifier si des conteneurs inactifs ont été trouvés
+# Check if inactive containers were found
 if [ -z "$inactive_containers" ]; then
-    echo "Aucun conteneur inactif trouvé."
+    echo "No inactive containers found."
 else
-    # Afficher la liste des conteneurs inactifs
-    echo "Conteneurs inactifs trouvés :"
+    # Display the list of inactive containers
+    echo "Inactive containers found:"
     echo "$inactive_containers"
 
-    # Demander confirmation pour supprimer les conteneurs
-    read -p "Voulez-vous supprimer ces conteneurs inactifs ? (y/n): " choice
+    # Ask for confirmation to remove the containers
+    read -p "Do you want to remove these inactive containers? (y/n): " choice
 
     if [ "$choice" = "y" ] || [ "$choice" = "Y" ]; then
-        # Supprimer les conteneurs inactifs
+        # Remove inactive containers
         docker rm $inactive_containers
-        echo "Les conteneurs inactifs ont été supprimés."
+        echo "Inactive containers have been removed."
     else
-        echo "Opération annulée. Aucun conteneur n'a été supprimé."
+        echo "Operation canceled. No containers were removed."
     fi
 fi
+
